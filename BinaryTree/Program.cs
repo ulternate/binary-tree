@@ -106,8 +106,8 @@ namespace BinaryTree
                 {
                     tree = new BinaryTree();
                 }
-                // Try and add the user's input to the tree as a new node. The addNode method returns 1 for a successful add and -1 for a duplicate.
-                if (tree.addNode(new Node(inputNumber)) != -1)
+                // Try and add the user's input to the tree as a new node. The addNode method returns true for a successful add and galse for a duplicate.
+                if (tree.addNode(new Node(inputNumber)))
                 {
                     // Successfully added the number to the tree.
                     Console.WriteLine("\nSuccessfully added {0} to the tree.\n", inputNumber);

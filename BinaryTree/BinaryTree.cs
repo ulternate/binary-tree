@@ -20,14 +20,14 @@ namespace BinaryTree
         }
 
         // Add a node to the binary tree.
-        public int addNode(Node nodeToInsert)
+        public bool addNode(Node nodeToInsert)
         {
             // If the root node is null then no root node exists so add the new node as the root node.
             if (root == null)
             {
                 root = nodeToInsert;
-                // Return a successful status code.
-                return 1;
+                // Return true as it was added to the tree.
+                return true;
             }
             // Else, the root node exists so we need to traverse the tree and add the node where it belongs.
             else
@@ -53,8 +53,8 @@ namespace BinaryTree
                         if (currentNode == null)
                         {
                             tempNode.leftNode = nodeToInsert;
-                            // Exit the while loop by returning a successful status id.
-                            return 1;
+                            // Exit the while loop by returning true as it was added to the tree.
+                            return true;
                         }
                     }
                     // Check if the node we're inserting is greater than the current node.
@@ -68,15 +68,15 @@ namespace BinaryTree
                         if (currentNode == null)
                         {
                             tempNode.rightNode = nodeToInsert;
-                            // Exit the while loop by returning a successful status id.
-                            return 1;
+                            // Exit the while loop by returning true as it was added to the tree.
+                            return true;
                         }
                     }
                     // Check if the node we're inserting is identical to the current node.
                     else if (nodeToInsert.value == currentNode.value)
                     {
-                        // Not handling duplicates at the moment, returning a unsuccessful status code.
-                        return -1;
+                        // Not handling duplicates at the moment, returning false as it wasn't added.
+                        return false;
                     }
                 }
             }
