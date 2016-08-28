@@ -1,5 +1,12 @@
 ﻿using System;
 using System.Threading;
+using System.Collections;
+
+
+// Created: Daniel Swain
+// Date: 28/08/2016
+//
+// The Program to allow a user to create a Binary Tree and add/remove nodes from it as well as print the nodes.
 
 namespace BinaryTree
 {
@@ -9,6 +16,7 @@ namespace BinaryTree
         static string welcomeMessage = "Welcome to my Binary Tree implementation in C#. Please choose the operation you want to complete.\n";
         static string[] options = { "Add number to tree.", "Search for number in tree.", "Remove number from tree.", "View Tree", "Exit Program." };
         static bool repeat = true;
+        static BinaryTree tree = null;
 
         static void Main(string[] args)
         {
@@ -82,7 +90,39 @@ namespace BinaryTree
         // The user wants to add a node to the tree, this method handles all the actions and inputs associated with that.
         static void handleAddingOfNode()
         {
-            Console.WriteLine("Not ready to add node to binary tree. To Be Completed");
+            Console.WriteLine("Please enter a number you would like to add to the binary tree.");
+
+            // Get the user's desired node data.
+            Console.Write("\nNumber to add: ");
+
+            // Parse the user's input into an integer, otherwise return a warning.
+            int inputNumber = 0;
+            string inputString = Console.ReadLine();
+            if (Int32.TryParse(inputString, out inputNumber))
+            {
+                // The input was a valid string integer representation and could be parsed.
+                // Initialise our tree if it doesn't exist yet.
+                if (tree == null)
+                {
+                    tree = new BinaryTree();
+                }
+                // Try and add the user's input to the tree as a new node. The addNode method returns 1 for a successful add and -1 for a duplicate.
+                if (tree.addNode(new Node(inputNumber)) != -1)
+                {
+                    // Successfully added the number to the tree.
+                    Console.WriteLine("\nSuccessfully added {0} to the tree.\n", inputNumber);
+                }
+                else
+                {
+                    // Unsuccessfully added the number to the tree (i.e. it already exists).
+                    Console.WriteLine("\nCouldn't add {0} to the tree as it already exists.\n", inputNumber);
+                }
+            }
+            else
+            {
+                // The input couldn't be parsed into an int. Send a warning.
+                Console.WriteLine("\nCouldn't get a number from the string ({0}) that you entered.\n", inputString);
+            }
         }
 
         // The user wants to search for a node in the tree, this method handles all the actions and inputs associated with that.
@@ -100,7 +140,15 @@ namespace BinaryTree
         // The user wants to print/visualise the tree, this method will visualise the current tree for the user.
         static void printTree()
         {
-            Console.WriteLine("Not ready to display the binary tree. To Be Completed");
+            if (tree != null)
+            {
+                Console.WriteLine("The following represents your current binary tree.\n");
+                tree.visualiseTree();
+            }
+            else
+            {
+                Console.WriteLine("\nYou haven't initialised a binary tree, please add a number and try and view it again.\n");
+            }
         }
 
         // The user has chosen to exit the program, handle this action in this method.
