@@ -14,7 +14,7 @@ namespace BinaryTree
     {
         // Class variables.
         static string welcomeMessage = "Welcome to my Binary Tree implementation in C#. Please choose the operation you want to complete.\n";
-        static string[] options = { "Add number to tree.", "Search for number in tree.", "Remove number from tree.", "View Tree", "Exit Program." };
+        static string[] options = { "Add number to tree.", "Search for number in tree.", "Edit a node in the tree", "Remove number from tree.", "View Tree", "Exit Program." };
         static bool repeat = true;
         static BinaryTree tree = null;
 
@@ -66,16 +66,21 @@ namespace BinaryTree
                     break;
 
                 case "3":
+                    // User wishes to edit a node from the binary tree.
+                    handleEditingNode();
+                    break;
+
+                case "4":
                     // User wishes to remove a node from the binary tree.
                     handleRemovingNode();
                     break;
 
-                case "4":
+                case "5":
                     // User wishes to display the binary tree.
                     printTree();
                     break;
 
-                case "5":
+                case "6":
                     // User wishes to exit the program, show the choice and then exit the program by setting repeat to false.
                     exitProgram();
                     break;
@@ -129,6 +134,12 @@ namespace BinaryTree
         static void handleTreeSearch()
         {
             Console.WriteLine("Not ready to search for a node in the binary tree. To Be Completed");
+        }
+
+        // The user wants to edit a node in the binary tree, this method handles all the action and inputs associated with that.
+        static void handleEditingNode()
+        {
+            Console.WriteLine("Not ready to edit a node in the binary tree. To be completed.");
         }
 
         // The user wants to remove a node from the tree, this method handles all the actions and inputs associated with that.
