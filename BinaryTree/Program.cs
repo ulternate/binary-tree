@@ -133,7 +133,40 @@ namespace BinaryTree
         // The user wants to search for a node in the tree, this method handles all the actions and inputs associated with that.
         static void handleTreeSearch()
         {
-            Console.WriteLine("Not ready to search for a node in the binary tree. To Be Completed");
+            Console.WriteLine("Please enter a number you would like to find in the binary tree.");
+
+            // Get the user's desired node.
+            Console.Write("\nNumber to find: ");
+
+            // Parse the user's input into an integer, otherwise return a warning.
+            int searchNumber = 0;
+            string inputString = Console.ReadLine();
+            if (Int32.TryParse(inputString, out searchNumber))
+            {
+                // The input was a valid string integer representation and could be parsed.
+                // If the tree is not null then try and search for the number
+                if (tree != null)
+                {
+                    // Search for the node in the tree
+                    Node searchNode = tree.findNode(searchNumber);
+
+                    // If the node is not null then it was found. Notify the user.
+                    if (searchNode != null)
+                    {
+                        Console.WriteLine("\n{0} was found in the binary tree.\n", searchNumber);
+                    }
+                    else
+                    // the node didn't exist.
+                    {
+                        Console.WriteLine("\n{0} wasn't found in the binary tree, please try another number or print the tree to see what's in there.\n", searchNumber);
+                    }
+                }
+            }
+            else
+            {
+                // Couldn't parse the users choice into a valid number.
+                Console.WriteLine("\nCouldn't get a number from the string ({0}) that you entered.\n", inputString);
+            }
         }
 
         // The user wants to edit a node in the binary tree, this method handles all the action and inputs associated with that.

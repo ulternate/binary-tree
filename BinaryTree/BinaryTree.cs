@@ -87,6 +87,47 @@ namespace BinaryTree
             }
         }
 
+        // Find a node in the binary tree.
+        public Node findNode(int valueToFind)
+        {
+            // If the tree has a root node then we can start searching, otherwise it hasn't been inititalised and won't contain any nodes.
+            if (root != null)
+            {
+                // Search for the value in the nodes by comparing the value with the root and then traversing down the subtrees based upon the value.
+                Node currentNodeBeingChecked = root;
+                // Continue checking nodes until we find the value or the loop is exited because it doesn't exist down the branch it should exist in.
+                while (currentNodeBeingChecked.value != valueToFind)
+                {
+                    // If the value is smaller thant the current node's value then look down the left node by setting the currentNode to the leftNode.
+                    if (valueToFind < currentNodeBeingChecked.value)
+                    {
+                        // Set the currentNodeBeingChecked to the left node so it will be the node checked against in the next loop.
+                        currentNodeBeingChecked = currentNodeBeingChecked.leftNode;
+                    }
+                    else
+                    // The value is greater than the value we're looking for (if it was equal then the while loop would have exited already).
+                    {
+                        // Set the currentNodeBeingChecked to the rightNode so it will be the node checked against in the next loop.
+                        currentNodeBeingChecked = currentNodeBeingChecked.rightNode;
+                    }
+                    // If the currentNodeBeingChecked is null then that means the previous node was a leaf node and has no children.
+                    // That implies that if the number still hasn't been found then it isn't in the tree as it is either a smaller or larger child (left or right).
+                    if (currentNodeBeingChecked == null)
+                    {
+                        // Returning null as the node wasn't found in the tree.
+                        return null;
+                    }
+                }
+                // The while loop has exited as the currentNodeBeingChecked.value == valueToFind. Return this node.
+                return currentNodeBeingChecked;
+            }
+            else
+            // There's no root node in the tree so return null.
+            {
+                return null;
+            }
+        }
+
         // Print out the contents of the tree using the desired traversal method.
         public void traverseAndPrintTree(int traversalMethod)
         {
