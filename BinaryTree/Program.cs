@@ -101,9 +101,8 @@ namespace BinaryTree
             Console.Write("\nNumber to add: ");
 
             // Parse the user's input into an integer, otherwise return a warning.
-            int inputNumber = 0;
-            string inputString = Console.ReadLine();
-            if (Int32.TryParse(inputString, out inputNumber))
+            int usersInput = parseUsersInputToInt(Console.ReadLine());
+            if (usersInput != -1)
             {
                 // The input was a valid string integer representation and could be parsed.
                 // Initialise our tree if it doesn't exist yet.
@@ -112,21 +111,21 @@ namespace BinaryTree
                     tree = new BinaryTree();
                 }
                 // Try and add the user's input to the tree as a new node. The addNode method returns true for a successful add and galse for a duplicate.
-                if (tree.addNode(new Node(inputNumber)))
+                if (tree.addNode(new Node(usersInput)))
                 {
                     // Successfully added the number to the tree.
-                    Console.WriteLine("\nSuccessfully added {0} to the tree.\n", inputNumber);
+                    Console.WriteLine("\nSuccessfully added {0} to the tree.\n", usersInput);
                 }
                 else
                 {
                     // Unsuccessfully added the number to the tree (i.e. it already exists).
-                    Console.WriteLine("\nCouldn't add {0} to the tree as it already exists.\n", inputNumber);
+                    Console.WriteLine("\nCouldn't add {0} to the tree as it already exists.\n", usersInput);
                 }
             }
             else
             {
-                // The input couldn't be parsed into an int. Send a warning.
-                Console.WriteLine("\nCouldn't get a number from the string ({0}) that you entered.\n", inputString);
+                // Couldn't parse the number into an int.
+                Console.WriteLine("\nCouldn't get a valid number from what you entered.\n");
             }
         }
 
@@ -139,33 +138,36 @@ namespace BinaryTree
             Console.Write("\nNumber to find: ");
 
             // Parse the user's input into an integer, otherwise return a warning.
-            int searchNumber = 0;
-            string inputString = Console.ReadLine();
-            if (Int32.TryParse(inputString, out searchNumber))
+            int usersInput = parseUsersInputToInt(Console.ReadLine());
+            if (usersInput != -1)
             {
-                // The input was a valid string integer representation and could be parsed.
-                // If the tree is not null then try and search for the number
+                // The users' input was parsed successfully, so search for the number in the tree.
                 if (tree != null)
                 {
                     // Search for the node in the tree
-                    Node searchNode = tree.findNode(searchNumber);
+                    Node searchNode = tree.findNode(usersInput);
 
                     // If the node is not null then it was found. Notify the user.
                     if (searchNode != null)
                     {
-                        Console.WriteLine("\n{0} was found in the binary tree.\n", searchNumber);
+                        Console.WriteLine("\n{0} was found in the binary tree.\n", usersInput);
                     }
                     else
                     // the node didn't exist.
                     {
-                        Console.WriteLine("\n{0} wasn't found in the binary tree, please try another number or print the tree to see what's in there.\n", searchNumber);
+                        Console.WriteLine("\n{0} wasn't found in the binary tree, please try another number or print the tree to see what's in there.\n", usersInput);
                     }
+                }
+                else
+                {
+                    // No tree existed.
+                    Console.WriteLine("\nNo tree exists yet, try adding a number first before searching for a number.");
                 }
             }
             else
             {
-                // Couldn't parse the users choice into a valid number.
-                Console.WriteLine("\nCouldn't get a number from the string ({0}) that you entered.\n", inputString);
+                // Couldn't parse the number into an int.
+                Console.WriteLine("\nCouldn't get a valid number from what you entered.\n");
             }
         }
 
@@ -223,6 +225,22 @@ namespace BinaryTree
             Thread.Sleep(1000);
             // Set the repeat variable to false so the while loop running the program will exit.
             repeat = false;
+        }
+
+        // Helper class to parse the user's input and return an int if possible.
+        static int parseUsersInputToInt(string inputString)
+        {
+            int inputNumber = 0;
+            if (Int32.TryParse(inputString, out inputNumber))
+            {
+                // input string could be parsed to a number, return it to the calling method.
+                return inputNumber;
+            }
+            else
+            {
+                // Input string couldn't be parsed to a number, return -1 to the calling method.
+                return -1;
+            }
         }
     }
 }
