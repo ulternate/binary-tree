@@ -13,6 +13,11 @@ namespace BinaryTree
         // The root node.
         private static Node root;
 
+        // Choice options for the traversal method in the visualiser.
+        public const int INORDER_TRAVERSAL = 1;
+        public const int PREORDER_TRAVERSAL = 2;
+        public const int POSTORDER_TRAVERSAL = 3;
+
         // Constructor to initialise the BinaryTree object, initially with a null root node.
         public BinaryTree()
         {
@@ -82,32 +87,88 @@ namespace BinaryTree
             }
         }
 
-        // Visualise the tree.
-        public void visualiseTree()
+        // Print out the contents of the tree using the desired traversal method.
+        public void traverseAndPrintTree(int traversalMethod)
         {
-            // The tree will be printed by queing up nodes and printing them to the console, this will end when the queue is empty (i.e. all nodes printed).
-            Queue q = new Queue();
-            // Enqueue the root node
-            q.Enqueue(root);
-            // While the queue isn't empty, lets print out each node in the correct position.
-            while (q.Count > 0)
+            switch (traversalMethod)
             {
-                // Get the current node from the queue. And it's value as a string.
-                Node currentNode = (Node) q.Dequeue();
-                string textToEnter = currentNode.value.ToString();
+                case INORDER_TRAVERSAL:
+                    Console.WriteLine("Traversing the tree using the InOrder traversal method (i.e. left subtree, then root, then right subtree).\n");
+                    inOrderTraversal(root);
+                    break;
 
-                // Write the current node when it's be deQueued, placing it in the middle of the console window.
-                Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (textToEnter.Length / 2)) + "}", textToEnter));
+                case PREORDER_TRAVERSAL:
+                    Console.WriteLine("Traversing the tree using the PreOrder traversal method (i.e. root, then left subtree, then right subtree).\n");
+                    preOrderTraversal(root);
+                    break;
 
-                // Check if the current node has a left or right child node and if so, add them to the queue to be printed.
-                if (currentNode.leftNode != null)
-                {
-                    q.Enqueue(currentNode.leftNode);
-                }
-                if (currentNode.rightNode != null)
-                {
-                    q.Enqueue(currentNode.rightNode);
-                }
+                case POSTORDER_TRAVERSAL:
+                    Console.WriteLine("Traversing the tree using the PostOrder traversal method (i.e. left subtree, then right subtree, then root).\n");
+                    postOrderTraversal(root);
+                    break;
+
+                default:
+                    Console.WriteLine("\nThe traversal method used, {0}, didn't refer to a valid traversal method. The options are {1}, {2} and {3}\n",
+                        traversalMethod, 
+                        INORDER_TRAVERSAL, 
+                        PREORDER_TRAVERSAL, 
+                        POSTORDER_TRAVERSAL);
+                    break;
+            }
+        }
+
+        // Traverse the BinaryTree inOrder.
+        // This means the left subtree is traversed recursively first using inOrder (i.e. left, root, right),
+        // Then the root node is visited,
+        // Then the right subtree is traversed recursively last using the inOrder method (i.e. left, root, right).
+        private void inOrderTraversal(Node root)
+        {
+            // if the node we're traversing is not null then traverse it's children.
+            if (root != null)
+            {
+                // recursively traverse the left children first.
+                inOrderTraversal(root.leftNode);
+                // then print the root node when there are no more left children.
+                Console.Write("{0} ", root.value);
+                // Finally, traverse the right nodes recursively.
+                inOrderTraversal(root.rightNode);
+            }
+        }
+
+        // Traverse the BinaryTree preOrder
+        // This means the root node is visited first, 
+        // Then the left subtrees are traversed recursively using the preorder method (i.e. root, then left, then right),
+        // Then the right subtrees are traversed recursively using the preorder method (i.e. root, then left, then right).
+        private void preOrderTraversal(Node root)
+        {
+            // if the node we're traversing is not null then traverse it's children.
+            if (root != null)
+            {
+                // Print the root node first.
+                Console.Write("{0} ", root.value);
+                // recursively traverse the left nodes.
+                preOrderTraversal(root.leftNode);
+                // recursively traverse the right nodes.
+                preOrderTraversal(root.rightNode);
+            }
+        }
+
+        // Traverse the BinaryTree using the postOrder method
+        // This means the root node is visited last.
+        // So the left subtrees are traversed recursively using the postorder method first (i.e. left, right, root),
+        // Then the right subtree's are traversed recursively using the postorder method (i.e. left, right, root),
+        // Then the root node is visited last (i.e. left, right, root).
+        private void postOrderTraversal(Node root)
+        {
+            // If the node we're traversing is not null then traverse it's children.
+            if (root != null)
+            {
+                // Recursively traverse the left node's first.
+                postOrderTraversal(root.leftNode);
+                // Recursively traverse the right node's next.
+                postOrderTraversal(root.rightNode);
+                // Print the root node last.
+                Console.Write("{0} ", root.value);
             }
         }
     }

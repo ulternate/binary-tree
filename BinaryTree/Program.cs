@@ -142,8 +142,28 @@ namespace BinaryTree
         {
             if (tree != null)
             {
-                Console.WriteLine("The following represents your current binary tree.\n");
-                tree.visualiseTree();
+                // Get the user's desired traversal method.
+                Console.WriteLine("Please choose the desired tree traversal method.");
+                Console.WriteLine("1. InOrder");
+                Console.WriteLine("2. PreOrder.");
+                Console.WriteLine("3. PostOrder.");
+                Console.Write("\nMethod: ");
+                int choice = -1;
+                // Get the input from the user with their traversal choice.
+                string traversalChoice = Console.ReadLine();
+                // Parse it into a choice
+                if ( Int32.TryParse(traversalChoice, out choice))
+                {
+                    // Use the BinaryTree traversal method to traverse and print the tree using the users choice.
+                    tree.traverseAndPrintTree(choice);
+                    // Print a blank line to the console to properly format the output before asking the user what to do again.
+                    Console.WriteLine("\n");
+                }
+                else
+                {
+                    // The input couldn't be parsed into an int from the user's input.
+                    Console.WriteLine("\nCouldn't get a number from the string ({0}) that you entered.\n", traversalChoice);
+                }
             }
             else
             {
