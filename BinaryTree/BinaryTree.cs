@@ -128,6 +128,13 @@ namespace BinaryTree
             }
         }
 
+        // Delete the desired node.
+        public bool deleteNodeByKey(int searchKey)
+        {
+            // TODO implement delete for nodes with zero children, 1 child and 2 children.
+            return false;
+        }
+
         // Print out the contents of the tree using the desired traversal method.
         public void traverseAndPrintTree(int traversalMethod)
         {
