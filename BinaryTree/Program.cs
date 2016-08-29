@@ -101,8 +101,12 @@ namespace BinaryTree
             Console.Write("\nNumber to add: ");
 
             // Parse the user's input into an integer, otherwise return a warning.
-            int usersInput = parseUsersInputToInt(Console.ReadLine());
-            if (usersInput != -1)
+            int usersKeyInput = parseUsersInputToInt(Console.ReadLine());
+            // Get the user's data for the node as well
+            Console.Write("\nData for the node: ");
+            string usersNodeData = Console.ReadLine();
+
+            if (usersKeyInput != -1)
             {
                 // The input was a valid string integer representation and could be parsed.
                 // Initialise our tree if it doesn't exist yet.
@@ -111,15 +115,15 @@ namespace BinaryTree
                     tree = new BinaryTree();
                 }
                 // Try and add the user's input to the tree as a new node. The addNode method returns true for a successful add and galse for a duplicate.
-                if (tree.addNode(new Node(usersInput)))
+                if (tree.addNode(new Node(usersKeyInput, usersNodeData)))
                 {
                     // Successfully added the number to the tree.
-                    Console.WriteLine("\nSuccessfully added {0} to the tree.\n", usersInput);
+                    Console.WriteLine("\nSuccessfully added [{0}, \"{1}\"] to the tree.\n", usersKeyInput, usersNodeData);
                 }
                 else
                 {
                     // Unsuccessfully added the number to the tree (i.e. it already exists).
-                    Console.WriteLine("\nCouldn't add {0} to the tree as it already exists.\n", usersInput);
+                    Console.WriteLine("\nCouldn't add [{0}, \"{1}\"] to the tree as it already exists.\n", usersKeyInput, usersNodeData);
                 }
             }
             else
@@ -145,12 +149,12 @@ namespace BinaryTree
                 if (tree != null)
                 {
                     // Search for the node in the tree
-                    Node searchNode = tree.findNode(usersInput);
+                    Node searchNode = tree.findNodeByKey(usersInput);
 
                     // If the node is not null then it was found. Notify the user.
                     if (searchNode != null)
                     {
-                        Console.WriteLine("\n{0} was found in the binary tree.\n", usersInput);
+                        Console.WriteLine("\n[{0}, \"{1}\"] was found in the binary tree.\n", searchNode.value, searchNode.data);
                     }
                     else
                     // the node didn't exist.

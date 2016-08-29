@@ -87,8 +87,8 @@ namespace BinaryTree
             }
         }
 
-        // Find a node in the binary tree.
-        public Node findNode(int valueToFind)
+        // Find a node in the binary tree by using the node's key.
+        public Node findNodeByKey(int searchKey)
         {
             // If the tree has a root node then we can start searching, otherwise it hasn't been inititalised and won't contain any nodes.
             if (root != null)
@@ -96,10 +96,10 @@ namespace BinaryTree
                 // Search for the value in the nodes by comparing the value with the root and then traversing down the subtrees based upon the value.
                 Node currentNodeBeingChecked = root;
                 // Continue checking nodes until we find the value or the loop is exited because it doesn't exist down the branch it should exist in.
-                while (currentNodeBeingChecked.value != valueToFind)
+                while (currentNodeBeingChecked.value != searchKey)
                 {
                     // If the value is smaller thant the current node's value then look down the left node by setting the currentNode to the leftNode.
-                    if (valueToFind < currentNodeBeingChecked.value)
+                    if (searchKey < currentNodeBeingChecked.value)
                     {
                         // Set the currentNodeBeingChecked to the left node so it will be the node checked against in the next loop.
                         currentNodeBeingChecked = currentNodeBeingChecked.leftNode;
@@ -170,7 +170,7 @@ namespace BinaryTree
                 // recursively traverse the left children first.
                 inOrderTraversal(root.leftNode);
                 // then print the root node when there are no more left children.
-                Console.Write("{0} ", root.value);
+                Console.Write("[{0}, \"{1}\"] ", root.value, root.data);
                 // Finally, traverse the right nodes recursively.
                 inOrderTraversal(root.rightNode);
             }
@@ -186,7 +186,7 @@ namespace BinaryTree
             if (root != null)
             {
                 // Print the root node first.
-                Console.Write("{0} ", root.value);
+                Console.Write("[{0}, \"{1}\"] ", root.value, root.data);
                 // recursively traverse the left nodes.
                 preOrderTraversal(root.leftNode);
                 // recursively traverse the right nodes.
@@ -209,7 +209,7 @@ namespace BinaryTree
                 // Recursively traverse the right node's next.
                 postOrderTraversal(root.rightNode);
                 // Print the root node last.
-                Console.Write("{0} ", root.value);
+                Console.Write("[{0}, \"{1}\"] ", root.value, root.data);
             }
         }
     }
