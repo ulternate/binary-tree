@@ -145,20 +145,18 @@ namespace BinaryTree
             int usersInput = parseUsersInputToInt(Console.ReadLine());
             if (usersInput != -1)
             {
-                // The users' input was parsed successfully, so search for the number in the tree.
                 if (tree != null)
                 {
-                    // Search for the node in the tree
-                    Node searchNode = tree.findNodeByKey(usersInput);
-
-                    // If the node is not null then it was found. Notify the user.
+                    // Tree exists, so search for the node using the user's key and return a node (or null) if found or not.
+                    Node searchNode = searchForNode(usersInput);
                     if (searchNode != null)
                     {
+                        // Node was found so let the user know.
                         Console.WriteLine("\n[{0}, \"{1}\"] was found in the binary tree.\n", searchNode.value, searchNode.data);
                     }
                     else
-                    // the node didn't exist.
                     {
+                        // Unable to find the node or the binary tree doesn't exist, let the user node.
                         Console.WriteLine("\n{0} wasn't found in the binary tree, please try another number or print the tree to see what's in there.\n", usersInput);
                     }
                 }
@@ -178,7 +176,48 @@ namespace BinaryTree
         // The user wants to edit a node in the binary tree, this method handles all the action and inputs associated with that.
         static void handleEditingNode()
         {
-            Console.WriteLine("Not ready to edit a node in the binary tree. To be completed.");
+            Console.WriteLine("Please enter the key of the node you wish to edit.");
+
+            // Get the user's desired node.
+            Console.Write("\nNumber to edit: ");
+
+            // Parse the user's input into an integer, otherwise return a warning.
+            int usersInput = parseUsersInputToInt(Console.ReadLine());
+            if (usersInput != -1)
+            {
+                if (tree != null)
+                {
+                    // Tree exists, so search for the node using the user's key and return a node (or null) if found or not.
+                    Node searchNode = searchForNode(usersInput);
+                    if (searchNode != null)
+                    {
+                        // Node was found, so let the user edit the data for the node.
+                        Console.WriteLine("\nEditing [{0}, \"{1}\"].\n", searchNode.value, searchNode.data);
+
+                        // Get the input for the new data.
+                        Console.Write("\nEnter your new data for the node: ");
+                        string newData = Console.ReadLine();
+
+                        // Save the changes to the node
+                        searchNode.data = newData;
+                    }
+                    else
+                    {
+                        // Unable to find the node or the binary tree doesn't exist, let the user node.
+                        Console.WriteLine("\n{0} wasn't found in the binary tree, please try another number or print the tree to see what's in there.\n", usersInput);
+                    }
+                }
+                else
+                {
+                    // No tree existed.
+                    Console.WriteLine("\nNo tree exists yet, try adding a number first before searching for a number.");
+                }
+            }
+            else
+            {
+                // Couldn't parse the number into an int.
+                Console.WriteLine("\nCouldn't get a valid number from what you entered.\n");
+            }
         }
 
         // The user wants to remove a node from the tree, this method handles all the actions and inputs associated with that.
@@ -229,6 +268,32 @@ namespace BinaryTree
             Thread.Sleep(1000);
             // Set the repeat variable to false so the while loop running the program will exit.
             repeat = false;
+        }
+
+        static Node searchForNode(int nodeKey)
+        {
+            // Search for a node in the tree.
+            if (tree != null)
+            {
+                // Search for the node in the tree
+                Node searchNode = tree.findNodeByKey(nodeKey);
+
+                // If the node is not null then it was found. Notify the user.
+                if (searchNode != null)
+                {
+                    return searchNode;
+                }
+                else
+                // the node didn't exist.
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                // No tree existed.
+                return null;
+            }
         }
 
         // Helper class to parse the user's input and return an int if possible.
