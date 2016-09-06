@@ -13,14 +13,28 @@ namespace BinaryTree
         public string data;
         public Node leftNode;
         public Node rightNode;
+        public Node parentNode;
 
-        // Constructor for constructing a node in our binary tree. Initially set the left and right nodes to null.
+        // Constructor for constructing a node in our binary tree. Initially set the left, right and parent nodes to null.
         public Node(int nodeValue, string nodeData)
         {
             value = nodeValue;
             data = nodeData;
             leftNode = null;
             rightNode = null;
+            parentNode = null;
+        }
+
+        // Get the parent node
+        public Node getParent()
+        {
+            return parentNode;
+        }
+
+        // Set the parent node
+        public void setParent(Node parent)
+        {
+            parentNode = parent;
         }
     }
 }

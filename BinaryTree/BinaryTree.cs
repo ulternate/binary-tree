@@ -57,6 +57,9 @@ namespace BinaryTree
                         // We use the tempNode here to ensure the newNode is added to the correct parentNode.
                         if (currentNode == null)
                         {
+                            // Set the parent node of the node to insert to the tempnode
+                            nodeToInsert.setParent(tempNode);
+                            // Add the node to the tree.
                             tempNode.leftNode = nodeToInsert;
                             // Exit the while loop by returning true as it was added to the tree.
                             return true;
@@ -72,6 +75,9 @@ namespace BinaryTree
                         // We use the tempNode here to ensure the newNode is added to the correct parentNode.
                         if (currentNode == null)
                         {
+                            // Set the parent node of the node to insert to the tempnode
+                            nodeToInsert.setParent(tempNode);
+                            // Add the node to the tree.
                             tempNode.rightNode = nodeToInsert;
                             // Exit the while loop by returning true as it was added to the tree.
                             return true;
