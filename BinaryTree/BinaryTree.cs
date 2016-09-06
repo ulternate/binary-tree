@@ -225,5 +225,30 @@ namespace BinaryTree
                 Console.Write("[{0}, \"{1}\"] ", root.value, root.data);
             }
         }
+
+        // Get the successor of the node (the smallest node of the tree that is 
+        // greater than the node passed to this function. 
+        // Used in deletion to find the new node that will replace the node being deleted.
+        private Node getSuccessor(Node node)
+        {
+            // A temporary node that will be returned
+            Node successor = null;
+
+            if (node.rightNode != null)
+            {
+                // Traverse the right subtree to find the successor
+                Node newNode = node.rightNode;
+                while (newNode != null)
+                {
+                    // Set the successor to the new node (which isn't null)
+                    successor = newNode;
+                    // Get the left node of the new node (which may be null)
+                    // This will step us through the right subtree until we're at the
+                    // smallest left node (i.e. the successor)
+                    newNode = newNode.leftNode;
+                }
+            }
+            return successor;
+        }
     }
 }
