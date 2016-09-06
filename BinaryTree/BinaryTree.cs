@@ -135,9 +135,77 @@ namespace BinaryTree
         }
 
         // Delete the desired node.
-        public bool deleteNodeByKey(int searchKey)
+        public bool deleteNode(Node node)
         {
-            // TODO implement delete for nodes with zero children, 1 child and 2 children.
+            // Node is a leaf node.
+            if ( node.leftNode == null && node.rightNode == null)
+            {
+                // The node has no children so we can safely delete it.
+                // Need to set the right or left node of the parent to be null send.
+                if (node.getParent().rightNode == node)
+                {
+                    // The node being deleted is the right node of the parent node.
+                    node.getParent().rightNode = null;
+                }
+                else
+                {
+                    // The node being deleted is the left node of the parent node.
+                    node.getParent().leftNode = null;
+                }
+            }
+            // Only left node on the node.
+            else if(node.leftNode != null && node.rightNode == null)
+            {
+                if (node.getParent().rightNode == node)
+                {
+                    // Set the right node of the parent to the left node of the node being deleted.
+                    node.getParent().rightNode = node.leftNode;
+                }
+                else
+                {
+                    // Set the left node of the parent to the left node of the node being deleted.
+                    node.getParent().leftNode = node.leftNode;
+                }
+            }
+            // Only right node is there.
+            else if (node.leftNode == null && node.rightNode != null)
+            {
+                if (node.getParent().rightNode == node)
+                {
+                    // Set the right node of the parent to the right node of the node being deleted.
+                    node.getParent().rightNode = node.rightNode;
+                }
+                else
+                {
+                    // Set the left node of the parent to the right node of the node being deleted.
+                    node.getParent().leftNode = node.rightNode;
+                }
+            }
+            // Both left and right children exist
+            else
+            {
+                // Get the predecessor (note, could also use the successor for this delete method).
+                Node predecessor = getPredecessor(node);
+                // Delete the predecessor (this should be a leaf node).
+                deleteNode(predecessor);
+                // Set the properties of the predecessor to be that of the node being deleted.
+                predecessor.setParent(node.getParent());
+                predecessor.leftNode = node.leftNode;
+                predecessor.rightNode = node.rightNode;
+                // if the node's parent's right node is equal to the node (i.e. it's a right node of the parent).
+                // Then set the right node of the parent to be the new predecessor.
+                if (node.getParent().rightNode == node)
+                {
+                    node.getParent().rightNode = predecessor;
+                }
+                // Otherwise set the left node of the parent to be the new predecessor.
+                else
+                {
+                    node.getParent().leftNode = predecessor;
+                }
+            }
+
+
             return false;
         }
 
@@ -258,7 +326,7 @@ namespace BinaryTree
         }
 
         // Find the predecessor of the node (the largest node of the left subtree)
-        private Node predecessor(Node node)
+        private Node getPredecessor(Node node)
         {
             Node predecessor = null;
 
