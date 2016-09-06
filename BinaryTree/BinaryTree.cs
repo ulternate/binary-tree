@@ -226,12 +226,12 @@ namespace BinaryTree
             }
         }
 
-        // Get the successor of the node (the smallest node of the tree that is 
-        // greater than the node passed to this function. 
+        // Get the successor of the node if it has right children (the smallest node of the tree that is 
+        // greater than the node passed to this function). 
         // Used in deletion to find the new node that will replace the node being deleted.
         private Node getSuccessor(Node node)
         {
-            // A temporary node that will be returned
+            // A temporary node representing the successor.
             Node successor = null;
 
             if (node.rightNode != null)
@@ -248,6 +248,31 @@ namespace BinaryTree
                     newNode = newNode.leftNode;
                 }
             }
+            return successor;
+        }
+
+        // Get the right parent of the node. Used in deletion if the node has no children.
+        private Node findRightParent(Node node)
+        {
+            // A temporary node representing the successor.
+            Node successor = null;
+
+            if (node.getParent() != null)
+            {
+                if (node.getParent().leftNode == node)
+                {
+                    // The successor's parent's left node is the same as the node
+                    // So set the successor to the parent of the node we want to delete
+                    successor = node.getParent();
+                }
+                else
+                {
+                    // Still haven't found the parent of the node we want to delete that 
+                    // would be considered the successor so recursively call this function.
+                    successor = findRightParent(node.getParent());
+                }
+            }
+
             return successor;
         }
     }
