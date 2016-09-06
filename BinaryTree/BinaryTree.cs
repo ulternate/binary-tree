@@ -137,6 +137,13 @@ namespace BinaryTree
         // Delete the desired node.
         public bool deleteNode(Node node)
         {
+
+            //////////////////////////////// TODO
+            // Need to handle the case where the node being deleted is the root....
+
+
+
+
             // Node is a leaf node.
             if ( node.leftNode == null && node.rightNode == null)
             {
@@ -146,11 +153,13 @@ namespace BinaryTree
                 {
                     // The node being deleted is the right node of the parent node.
                     node.getParent().rightNode = null;
+                    return true;
                 }
                 else
                 {
                     // The node being deleted is the left node of the parent node.
                     node.getParent().leftNode = null;
+                    return true;
                 }
             }
             // Only left node on the node.
@@ -160,11 +169,13 @@ namespace BinaryTree
                 {
                     // Set the right node of the parent to the left node of the node being deleted.
                     node.getParent().rightNode = node.leftNode;
+                    return true;
                 }
                 else
                 {
                     // Set the left node of the parent to the left node of the node being deleted.
                     node.getParent().leftNode = node.leftNode;
+                    return true;
                 }
             }
             // Only right node is there.
@@ -174,11 +185,13 @@ namespace BinaryTree
                 {
                     // Set the right node of the parent to the right node of the node being deleted.
                     node.getParent().rightNode = node.rightNode;
+                    return true;
                 }
                 else
                 {
                     // Set the left node of the parent to the right node of the node being deleted.
                     node.getParent().leftNode = node.rightNode;
+                    return true;
                 }
             }
             // Both left and right children exist
@@ -197,15 +210,15 @@ namespace BinaryTree
                 if (node.getParent().rightNode == node)
                 {
                     node.getParent().rightNode = predecessor;
+                    return true;
                 }
                 // Otherwise set the left node of the parent to be the new predecessor.
                 else
                 {
                     node.getParent().leftNode = predecessor;
+                    return true;
                 }
             }
-
-
             return false;
         }
 

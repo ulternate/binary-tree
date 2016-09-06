@@ -223,7 +223,52 @@ namespace BinaryTree
         // The user wants to remove a node from the tree, this method handles all the actions and inputs associated with that.
         static void handleRemovingNode()
         {
-            Console.WriteLine("Not ready to remove a node from the binary tree. To Be Completed");
+            Console.WriteLine("Please enter the key of the node you wish to delete.");
+
+            // Get the user's desired node.
+            Console.Write("\nNumber to delete: ");
+
+            // Parse the user's input into an integer, otherwise return a warning.
+            int usersInput = parseUsersInputToInt(Console.ReadLine());
+            if (usersInput != -1)
+            {
+                if (tree != null)
+                {
+                    // Tree exists, so search for the node using the user's key and return a node (or null) if found or not.
+                    Node deletedNode = searchForNode(usersInput);
+
+                    if (deletedNode != null)
+                    {
+                        // Node was found so let's delete it.
+                        bool status = tree.deleteNode(deletedNode);
+                        if (status)
+                        {
+                            // Delete was successful.
+                            Console.WriteLine("\nSuccessfully deleted [{0}, \"{1}\"] from the tree.\n", deletedNode.value, deletedNode.data);
+                        }
+                        else
+                        {
+                            // Delete failed.
+                            Console.WriteLine("\nWas unsuccessful in deleting the node from the tree.");
+                        }
+                    }
+                    else
+                    {
+                        // Unable to find the node or the binary tree doesn't exist, let the user node.
+                        Console.WriteLine("\n{0} wasn't found in the binary tree, please try another number or print the tree to see what's in there.\n", usersInput);
+                    }
+                }
+                else
+                {
+                    // No tree existed.
+                    Console.WriteLine("\nNo tree exists yet, try adding a number first before searching for a number.");
+                }
+            }
+            else
+            {
+                // Couldn't parse the number into an int.
+                Console.WriteLine("\nCouldn't get a valid number from what you entered.\n");
+            }
         }
 
         // The user wants to print/visualise the tree, this method will visualise the current tree for the user.
