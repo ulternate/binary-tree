@@ -248,7 +248,41 @@ namespace BinaryTree
                     newNode = newNode.leftNode;
                 }
             }
+            else
+            {
+                // No right subtree so find the right parent of the node which will be
+                // the successor.
+                successor = findRightParent(node);
+            }
             return successor;
+        }
+
+        // Find the predecessor of the node (the largest node of the left subtree)
+        private Node predecessor(Node node)
+        {
+            Node predecessor = null;
+
+            if (node.leftNode != null)
+            {
+                // Traverse the left subtree and find the predecessor
+                Node newNode = node.leftNode;
+                while (newNode != null)
+                {
+                    predecessor = newNode;
+                    // Get the right node of the new node (which may be null)
+                    // This will step us through the left subtree until we're at the
+                    // largest right node (i.e. the predecessor)
+                    newNode = newNode.rightNode;
+                }
+            }
+            else
+            {
+                // No left subtree so find the left parent of the node which will be the successor.
+                predecessor = findLeftParent(node);
+            }
+
+            return predecessor;
+
         }
 
         // Get the right parent of the node. Used in deletion if the node has no children.
@@ -274,6 +308,31 @@ namespace BinaryTree
             }
 
             return successor;
+        }
+
+        // Get the left parent of the node. Used in deletion if the node has no childen.
+        private Node findLeftParent(Node node)
+        {
+            // A temporary node representing the predecessor.
+            Node predecessor = null;
+
+            if (node.getParent() != null)
+            {
+                if (node.getParent().rightNode == node)
+                {
+                    // The successor's parent's right node is the same as the node
+                    // So set the predecessor to the parent of the node we want to delete
+                    predecessor = node.getParent();
+                }
+                else
+                {
+                    // Still haven't found the parent of the ndoe we want to delete that
+                    // would be considered the predecessor so recursively call this function.
+                    predecessor = findLeftParent(node.getParent());
+                }
+            }
+
+            return predecessor;
         }
     }
 }
