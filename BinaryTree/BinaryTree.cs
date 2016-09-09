@@ -24,6 +24,12 @@ namespace BinaryTree
             root = null;
         }
 
+        // Return the root node for the tree.
+        public Node getRoot()
+        {
+            return root;
+        }
+
         // Add a node to the binary tree.
         public bool addNode(Node nodeToInsert)
         {
@@ -31,6 +37,7 @@ namespace BinaryTree
             if (root == null)
             {
                 root = nodeToInsert;
+                root.setParent(root);
                 // Return true as it was added to the tree.
                 return true;
             }
@@ -144,57 +151,100 @@ namespace BinaryTree
 
 
 
-            // Node is a leaf node.
+            // Node being deleted is a leaf node.
             if ( node.leftNode == null && node.rightNode == null)
             {
                 // The node has no children so we can safely delete it.
-                // Need to set the right or left node of the parent to be null send.
+                // Need to set the right or left node of the parent to be null.
                 if (node.getParent().rightNode == node)
                 {
                     // The node being deleted is the right node of the parent node.
                     node.getParent().rightNode = null;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
                     return true;
                 }
-                else
+                else if (node.getParent().leftNode == node)
                 {
                     // The node being deleted is the left node of the parent node.
                     node.getParent().leftNode = null;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
+                    return true;
+                }
+                else if (node.getParent() == node)
+                {
+                    // The node is the root node so just delete it.
+                    root = null;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
                     return true;
                 }
             }
-            // Only left node on the node.
-            else if(node.leftNode != null && node.rightNode == null)
+            // Only left subtree (or child) on the node.
+            else if (node.leftNode != null && node.rightNode == null)
             {
                 if (node.getParent().rightNode == node)
                 {
                     // Set the right node of the parent to the left node of the node being deleted.
                     node.getParent().rightNode = node.leftNode;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
                     return true;
                 }
-                else
+                else if (node.getParent().leftNode == node)
                 {
                     // Set the left node of the parent to the left node of the node being deleted.
                     node.getParent().leftNode = node.leftNode;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
                     return true;
                 }
+                else if (node.getParent() == node)
+                {
+                    // The node is the root node, so set the new root node to the left child node of the root node.
+                    root = node.leftNode;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
+                }
             }
-            // Only right node is there.
+            // Only right subtree (or child) is there.
             else if (node.leftNode == null && node.rightNode != null)
             {
                 if (node.getParent().rightNode == node)
                 {
                     // Set the right node of the parent to the right node of the node being deleted.
                     node.getParent().rightNode = node.rightNode;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
                     return true;
                 }
-                else
+                else if (node.getParent().leftNode == node)
                 {
                     // Set the left node of the parent to the right node of the node being deleted.
                     node.getParent().leftNode = node.rightNode;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
+                    return true;
+                } else if (node.getParent() == node)
+                {
+                    // The node is the root ndoe, so set the new root node to the right child node of the root node.
+                    root = node.rightNode;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
                     return true;
                 }
             }
-            // Both left and right children exist
+            // Both left and right children or subtrees exist
             else
             {
                 // Get the predecessor (note, could also use the successor for this delete method).
@@ -210,12 +260,30 @@ namespace BinaryTree
                 if (node.getParent().rightNode == node)
                 {
                     node.getParent().rightNode = predecessor;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
                     return true;
                 }
-                // Otherwise set the left node of the parent to be the new predecessor.
-                else
+                // if the node's parent's left node is equal to the node (i.e. it's a left node of the parent).
+                // Then set the left node of the parent to be the new predecessor.
+                else if (node.getParent().rightNode == node)
                 {
                     node.getParent().leftNode = predecessor;
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
+                    return true;
+                }
+                // Else if the node's parent is equal to the node then it is the root node so set the root to be the predecessor.
+                else if (node.getParent() == node)
+                {
+                    root = predecessor;
+                    // Set the parent node to itself as it's the root.
+                    root.setParent(root);
+                    // Delete the node.
+                    node = null;
+                    // Node successfully deleted.
                     return true;
                 }
             }
