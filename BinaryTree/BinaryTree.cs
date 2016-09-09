@@ -144,13 +144,6 @@ namespace BinaryTree
         // Delete the desired node.
         public bool deleteNode(Node node)
         {
-
-            //////////////////////////////// TODO
-            // Need to handle the case where the node being deleted is the root....
-
-
-
-
             // Node being deleted is a leaf node.
             if ( node.leftNode == null && node.rightNode == null)
             {
@@ -209,6 +202,8 @@ namespace BinaryTree
                 {
                     // The node is the root node, so set the new root node to the left child node of the root node.
                     root = node.leftNode;
+                    // Set the parent to the root node.
+                    root.setParent(root);
                     // Delete the node.
                     node = null;
                     // Node successfully deleted.
@@ -238,6 +233,8 @@ namespace BinaryTree
                 {
                     // The node is the root ndoe, so set the new root node to the right child node of the root node.
                     root = node.rightNode;
+                    // Set the parent to the root node.
+                    root.setParent(root);
                     // Delete the node.
                     node = null;
                     // Node successfully deleted.
